@@ -20,6 +20,13 @@ int dogAnalyticsArray[maxNumOfDays];
 int catAnalyticsArray[maxNumOfDays];
 int fightsAnalyticsArray[maxNumOfDays];
 int catFightSuccessAnalyticsArray[maxNumOfDays];
+
+// Variable to determine the average % of cat win rate in fights
+int catWinRateVar = 80;
+
+// # Of Given Animal Vars
+const int numOfCats = 3; // Number of cats to be placed
+const int numOfDogs = 50; // Number of dogs to be placed
 // STOP  - Global Variables
 
 
@@ -159,7 +166,7 @@ public:
     }
 
     ~Dog() {
-        cout << "Dog #" << id << " is being destroyed..." << endl;
+        //
     }
 };
 
@@ -229,7 +236,7 @@ public:
             return true; // Assuming cat loses if there's no dog to fight
         }
         int random = randomNum(99);
-        if ( (getStrength() > dog->getStrength()) and (random > 30) ) {
+        if ( (getStrength() > dog->getStrength()) and (random > catWinRateVar) ) {
             return true; // Cat wins
         } else {
             return false; // Cat loses
@@ -256,7 +263,7 @@ public:
     }
 
     ~Cat() {
-        cout << "Cat #" << id << " is being destroyed..." << endl;
+        //
     }
 };
 // STOP  - Classes
@@ -380,8 +387,6 @@ void placeDogsInPlayspace(Dog* dogArray[], int arrayLength) {
 }
 
 void populateCatArray(int randomFlag, Cat* catArray[]) {
-    const int numOfCats = 3; // Number of cats to be placed
-
     if (randomFlag == 0) { // Not random placing of cats, will place at (0,0) and then (0,1) , and so on
         for (int i = 0; i < numOfCats; i++) { // Generate cats
             catArray[i] = new Cat(0, i, i, 10); // Allocate memory for new Cat objects and store their pointers in the array
@@ -420,8 +425,6 @@ void printCatArray(Cat* catArray[]) {
 }
 
 void populateDogArray(int randomFlag, Dog* dogArray[]) {
-    const int numOfDogs = 47; // Number of dogs to be placed
-
     if (randomFlag == 0) { // Not random placing of dogs, will place at 0,0 and then 0,1 , and so on
         for (int i = 0; i < numOfDogs; i++) { // Generate 3 dogs
             dogArray[i] = new Dog(1, i, i, 10); // Allocate memory for new Dog objects and store their pointers in the array
@@ -543,7 +546,7 @@ float findCatFightSuccessRate() {
     if (totalFightsLost == 0) {
         return 100; // Return100 if there are no lost fights to prevent division by zero and tell the user that they won all fights
     } else {
-        float successRate = static_cast<float>(totalFightsWon) / totalFightsLost; // Perform division with floating-point numbers
+        float successRate = static_cast<float>(totalFightsWon) / findTotalNumberOfFights(); // Perform division with floating-point numbers
         return round(successRate * 100); // Round the result to two decimal places
     }
 }
@@ -660,7 +663,9 @@ int main() {
     }
 
     printMatrix(); // Prints the play space matrix at the end
+    cout << "Cat Array: ";
     printCatArray(catArray); // Prints the cat array at the end
+    cout << "Dog Array: ";
     printDogArray(dogArray); // Prints the dog array at the end
 
     // Basic logic to determine console dialogue regarding which side won (Cats or Dogs)
@@ -688,6 +693,7 @@ int main() {
 
     // Analytical console dialogue
     float ratioOfFightsToDays = static_cast<float>(findTotalNumberOfFights()) / loopVar;
+    float catFightSuccessRate = findCatFightSuccessRate();
     cout << endl;
     cout << "+===============================================+" << endl;
     cout << "| FIGHT ANALYTICS                               |" << endl;
@@ -695,8 +701,8 @@ int main() {
     cout << "Total # Of Fights: " << findTotalNumberOfFights()  << endl;
     cout << "Average # Of Fights Per Day: " << ratioOfFightsToDays  << endl;
     cout << "Average # Of Days Between Fights: " << floor(( 1 / ratioOfFightsToDays ))  << endl;
-    cout << "Cat Win Rate: " << findCatFightSuccessRate() << "%" << endl;
-    cout << "Dog Win Rate: " << (100 - findCatFightSuccessRate()) << "%" << endl;
+    cout << "Cat Win Rate: " << catFightSuccessRate << "%" << endl;
+    cout << "Dog Win Rate: " << (100 - catFightSuccessRate) << "%" << endl;
     cout << "=================================================" << endl;
 
 
