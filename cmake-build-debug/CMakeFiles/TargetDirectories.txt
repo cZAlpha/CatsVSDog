@@ -1,0 +1,3 @@
+/Users/nbklaus21/CLionProjects/CatsVSDogs/cmake-build-debug/CMakeFiles/CatsVSDogs.dir
+/Users/nbklaus21/CLionProjects/CatsVSDogs/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/nbklaus21/CLionProjects/CatsVSDogs/cmake-build-debug/CMakeFiles/rebuild_cache.dir
