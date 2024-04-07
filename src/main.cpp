@@ -3,6 +3,7 @@
 #include <cstdlib>   // For random
 #include <ctime>     // For time() function
 #include <cmath>     // For rounding
+#include "../include/helper.hpp"
 
 using namespace std; // For more simple printing to console
 // STOP  - Imports & Namespaces
@@ -28,17 +29,6 @@ int catWinRateVar = 80;
 const int numOfCats = 3; // Number of cats to be placed
 const int numOfDogs = 50; // Number of dogs to be placed
 // STOP  - Global Variables
-
-
-
-// START - RANDOM FUNCTION
-int randomNum(int max) { // Function that generates a random number up to the number inputted as an argument (max)
-    int randomNum = rand() % max; // Generate a random number between 0 and max
-    return randomNum;
-}
-// STOP  - RANDOM FUNCTION
-
-
 
 // START - Classes
 class Animal {
@@ -134,7 +124,7 @@ public:
     void move() {
         int newX, newY;
         do {
-            int direction = randomNum(4); // Generate a random direction (0: up, 1: down, 2: left, 3: right)
+            int direction = random_number(3); // Generate a random direction (0: up, 1: down, 2: left, 3: right)
             switch (direction) {
                 case 0: // Up
                     newX = getX() - 3;
@@ -198,7 +188,7 @@ public:
     void move() {
         int newX, newY;
         do {
-            int direction = randomNum(4); // Generate a random direction (0: up, 1: down, 2: left, 3: right)
+            int direction = random_number(3); // Generate a random direction (0: up, 1: down, 2: left, 3: right)
             switch (direction) {
                 case 0: // Up
                     newX = getX() - 1;
@@ -235,7 +225,7 @@ public:
         if (dog == nullptr) {
             return true; // Assuming cat loses if there's no dog to fight
         }
-        int random = randomNum(99);
+        int random = random_number(99);
         if ( (getStrength() > dog->getStrength()) and (random > catWinRateVar) ) {
             return true; // Cat wins
         } else {
@@ -397,9 +387,9 @@ void populateCatArray(int randomFlag, Cat* catArray[]) {
         }
     } else if (randomFlag == 1) { // Will randomize the placing of cats
         for (int i = 0; i < numOfCats; i++) { // Generate cats
-            int randomX = randomNum(99);
-            int randomY = randomNum(99);
-            int randomStrength = randomNum(50);
+            int randomX = random_number(99);
+            int randomY = random_number(99);
+            int randomStrength = random_number(50);
             catArray[i] = new Cat(randomX, randomY, i, (randomStrength + 10) ); // Allocate memory for new Cat objects and store their pointers in the array
         }
         // Place nullptrs in the rest of the places
@@ -435,9 +425,9 @@ void populateDogArray(int randomFlag, Dog* dogArray[]) {
         }
     } else if (randomFlag == 1) { // Will randomize the placing of dogs
         for (int i = 0; i < numOfDogs; i++) { // Generate dogs
-            int randomX = randomNum(99);
-            int randomY = randomNum(99);
-            int randomStrength = randomNum(30);
+            int randomX = random_number(99);
+            int randomY = random_number(99);
+            int randomStrength = random_number(30);
             dogArray[i] = new Dog(randomX, randomY, (i + 3), randomStrength); // Allocate memory for new Cat objects and store their pointers in the array
         }
         // Place nullptrs in the rest of the places
